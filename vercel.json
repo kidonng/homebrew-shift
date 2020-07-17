@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "env": {
+    "BOT_TOKEN": "@tg_box_bot_token",
+    "GH_TOKEN": "@tg_box_gh_token",
+    "GIST_ID": "@tg_box_gist_id",
+    "IS_VERCEL": "1"
+  },
+  "github": {
+    "enabled": false
+  }
+}

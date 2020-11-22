@@ -48,11 +48,23 @@ IO.popen("git -C #{tap_path} --no-pager log --pretty=oneline #{formula_path}") d
   io.each do |line|
     puts line
 
-    if line.include? "update #{version} bottle"
-      hash = line.split(" ")[0]
-      break
+    commit_version = /(?:add|update) (.+) bottle/.match(line)
+
+    if commit_version
+      if commit_version[1] == version
+        hash = line.split(" ")[0]
+        break
+      end
+
+      if Gem::Version.new(commit_version[1]) < Gem::Version.new(version)
+        odie "Specified version not found"
+      end
     end
   end
+end
+
+if hash == nil
+  odie "Specified version not found"
 end
 
 if options.formula_only
